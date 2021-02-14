@@ -17,6 +17,8 @@
 /tmp/pids/*
 !/tmp/pids/
 !/tmp/pids/.keep
+/tmp/pids/.keep
+/tmp/miniprofiler
 
 # Ignore uploaded files in development.
 /storage/*
@@ -34,3 +36,7 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.idea
+/coverage/
+/config/database.yml
+/config/credentials.yml.enc
