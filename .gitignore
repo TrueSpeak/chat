@@ -37,6 +37,7 @@
 yarn-debug.log*
 .yarn-integrity
 .idea
+.idea/workspace.xml
 /coverage/
 /config/database.yml
 /config/credentials.yml.enc
