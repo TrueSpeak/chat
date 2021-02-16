@@ -40,7 +40,6 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.boolean :only_read, default: true
       t.datetime :only_read_end
 
-
       t.timestamps null: false
     end
 

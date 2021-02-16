@@ -15,16 +15,24 @@ ActiveRecord::Schema.define(version: 2021_02_14_151058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "black_listed_users", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "black_list_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["black_list_id"], name: "index_black_listed_users_on_black_list_id"
+    t.index ["user_id"], name: "index_black_listed_users_on_user_id"
+  end
+
   create_table "black_lists", force: :cascade do |t|
-    t.string "user_type", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_type", "user_id"], name: "index_black_lists_on_user"
+    t.index ["user_id"], name: "index_black_lists_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "body", limit: 200
+    t.string "body", limit: 200, default: "", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -32,21 +40,12 @@ ActiveRecord::Schema.define(version: 2021_02_14_151058) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string "body", limit: 200
-    t.boolean "read"
+    t.string "body", limit: 200, default: "", null: false
+    t.boolean "read", default: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_messages_on_user_id"
-  end
-
-  create_table "user_black_lists", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "black_list_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["black_list_id"], name: "index_user_black_lists_on_black_list_id"
-    t.index ["user_id"], name: "index_user_black_lists_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -58,8 +57,8 @@ ActiveRecord::Schema.define(version: 2021_02_14_151058) do
     t.string "name"
     t.string "surname"
     t.string "avatar"
-    t.string "role"
-    t.boolean "only_read"
+    t.string "role", default: "guest", null: false
+    t.boolean "only_read", default: true
     t.datetime "only_read_end"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -67,8 +66,9 @@ ActiveRecord::Schema.define(version: 2021_02_14_151058) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "black_listed_users", "black_lists"
+  add_foreign_key "black_listed_users", "users"
+  add_foreign_key "black_lists", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "messages", "users"
-  add_foreign_key "user_black_lists", "black_lists"
-  add_foreign_key "user_black_lists", "users"
 end
