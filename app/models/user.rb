@@ -3,7 +3,9 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  belongs_to :user_black_list
+  has_many :comments, :messages
+  has_one :user_black_list
+  belongs_to :black_list
 
   validates :email
 end

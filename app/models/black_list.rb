@@ -1,3 +1,3 @@
 class BlackList < ApplicationRecord
-  has_many :user, polymorphic: true
+  has_many :users
 end
