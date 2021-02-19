@@ -1,0 +1,9 @@
+h1 Chat
+= link_to 'Post message', new_message_path
+br
+div class="chat_zone"
+  - @messages.each do |message|
+    = "#{message.user.email}: #{message.body}"
+    - if signed_in? && current_user.role != 'user'
+      = link_to ' delete', message_path(message), method: :delete
+    br

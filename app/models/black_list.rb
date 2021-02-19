@@ -1,3 +1,5 @@
 class BlackList < ApplicationRecord
-  has_many :black_listed_users
+  has_one :user
+
+  validates :user_id, presence: true
 end

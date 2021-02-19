@@ -1,10 +1,12 @@
 class CreateBlackListedUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :black_listed_users do |t|
-      t.references :user, null: false, foreign_key: true
+      t.integer :user_id, null: false
       t.references :black_list, null: false, foreign_key: true
 
       t.timestamps
     end
+
+    add_foreign_key 'black_listed_users', 'users', column: :user_id, primary_key: :id
   end
 end

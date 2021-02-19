@@ -11,6 +11,21 @@
   </head>
 
   <body>
+    <% if signed_in? %>
+      <%= current_user.email %>
+      &nbsp
+      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-danger btn-sm' %>
+      <br>
+    <% else %>
+      <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-success btn-sm' %>
+      <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-warning btn-sm' %>
+    <% end %>
+    <br>
+    <%= link_to 'Main page', root_path %>
+    <%= link_to 'List of users', users_path if current_user&.role&.include?('admin') %>
+    <br>
+    <%= render 'shared/flash' %>
+    <br>
     <%= yield %>
   </body>
 </html>

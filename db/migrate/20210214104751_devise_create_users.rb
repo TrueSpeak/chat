@@ -36,7 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :surname
       t.string :avatar
-      t.string :role, null: false, default: 'guest'
+      t.string :role, null: false, default: 'user'
       t.boolean :only_read, default: true
       t.datetime :only_read_end
 

@@ -16,12 +16,11 @@ ActiveRecord::Schema.define(version: 2021_02_14_151058) do
   enable_extension "plpgsql"
 
   create_table "black_listed_users", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.bigint "black_list_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["black_list_id"], name: "index_black_listed_users_on_black_list_id"
-    t.index ["user_id"], name: "index_black_listed_users_on_user_id"
   end
 
   create_table "black_lists", force: :cascade do |t|
