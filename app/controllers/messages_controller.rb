@@ -28,7 +28,12 @@ class MessagesController < ApplicationController
     elsif @message.destroyed?
       action = 'destroyed'
     end
-    ActionCable.server.broadcast('chat_channel', action: action, message: @message)
+    ActionCable.server.broadcast(
+      'chat_channel',
+      action: action,
+      message: @message,
+      user_email: @message.user.email
+    )
   end
 
   def params_permit

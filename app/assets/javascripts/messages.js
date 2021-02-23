@@ -8,11 +8,21 @@ var ready = function () {
                 var message = data.message
 
                 if (data.action === 'created') {
-                    $(".chat_zone").prepend(`
-                        <div class="message_${message.id}">
-                            ${message.body}
-                        </div>
-                    `)
+                    if (gon.current_user_role === 'user') {
+                        $(".chat_zone").prepend(`
+                            <div class="message_${message.id}">
+                                ${data.user_email}: ${message.body}
+                            </div>
+                        `)
+                    }
+                    if (gon.current_user_role !== 'user') {
+                        $(".chat_zone").prepend(`
+                            <div class="message_${message.id}">
+                                ${data.user_email}: ${message.body}
+                                <a data-remote="true" rel="nofollow" data-method="delete" href="/messages/${message.id}"> delete</a>
+                            </div>
+                        `)
+                    }
                 }
                 if (data.action === 'destroyed') {
                     $(".message_" + message.id).remove();
