@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   end
 
   def index
-    @messages = Message.all
+    @messages = Message.all.order(id: :desc)
     @message = Message.new
   end
 
