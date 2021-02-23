@@ -1,4 +1,4 @@
-class CreateBlackListedUsers < ActiveRecord::Migration[6.1]
+class CreateBlackListedUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :black_listed_users do |t|
       t.integer :user_id, null: false

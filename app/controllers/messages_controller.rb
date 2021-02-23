@@ -1,33 +1,35 @@
 class MessagesController < ApplicationController
-  before_action :authenticate?, only: [:new, :create]
-
-  def new
-    @message = current_user.messages.new
-  end
+  before_action :authenticate?, only: [:destroy, :create]
+  after_action :publish_message, only: [:create, :destroy]
 
   def create
-    @message = current_user.messages.new(params_permit)
-    if @message.save
-      redirect_to messages_path
-    else
-      render :new
-    end
+    @message = current_user.messages.create(params_permit)
   end
 
   def index
     @messages = Message.all
+    @message = Message.new
   end
 
   def destroy
-    if current_user.role != 'user'
-      Message.find(params[:id]).destroy
-
-      flash[:alert] = 'Message successfully deleted'
-      redirect_to messages_path
+    unless current_user.user?
+      @message = Message.find(params[:id])
+      @message.destroy
     end
   end
 
   private
+
+  def publish_message
+    return if @message.errors.any?
+
+    if @message.persisted?
+      action = 'created'
+    elsif @message.destroyed?
+      action = 'destroyed'
+    end
+    ActionCable.server.broadcast('chat_channel', action: action, message: @message)
+  end
 
   def params_permit
     params.require(:message).permit(:body)

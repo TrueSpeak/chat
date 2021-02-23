@@ -1,11 +1,11 @@
 class User < ApplicationRecord
-  extend Enumerize
-
-  ROLES = %i[admin moderator user].freeze
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  extend Enumerize
+
+  ROLES = %i[admin moderator user].freeze
   has_many :messages
   has_many :comments
   has_one :black_list

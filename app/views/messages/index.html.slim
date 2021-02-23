@@ -1,9 +1,12 @@
 h1 Chat
-= link_to 'Post message', new_message_path
 br
+div class="message_form"
+  = render 'form', message: @message if signed_in?
+
 div class="chat_zone"
   - @messages.each do |message|
-    = "#{message.user.email}: #{message.body}"
-    - if signed_in? && current_user.role != 'user'
-      = link_to ' delete', message_path(message), method: :delete
-    br
+    div class="message_#{message.id}"
+      = "#{message.user.email}: #{message.body}"
+      - if signed_in? && current_user.role != 'user'
+        = link_to ' delete', message_path(message), method: :delete, remote: true
+      br

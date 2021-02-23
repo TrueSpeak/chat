@@ -9,4 +9,6 @@ Rails.application.routes.draw do
       post :upgrade_role
     end
   end
+
+  mount ActionCable.server => '/cable'
 end
