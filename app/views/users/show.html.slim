@@ -1,0 +1,14 @@
+h1 User Profile
+
+h1= "Name: #{@user.name}"
+br
+h1= "Surname: #{@user.surname}"
+br
+h1= "Role: #{@user.role}"
+br
+- if current_user&.role.include?('admin')
+  = link_to 'Upgrade to moderator', upgrade_role_user_path(@user.id), method: :post
+  br
+  = link_to 'Downgrade to default', downgrade_role_user_path(@user.id), method: :post
+  br
+  = link_to 'Delete user', user_path(@user.id), method: :delete

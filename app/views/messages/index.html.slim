@@ -1,0 +1,17 @@
+h3 Chat
+div class="message_form"
+  = render 'form', message: @message if signed_in?
+
+div class="chat_zone"
+  - @messages.each do |message|
+    div class="message_#{message.id}"
+      div class="card"
+        div class="card-body"
+          = "#{message.user.email}: #{message.body}"
+          - if signed_in? && current_user.role != 'user'
+            = link_to ' delete', message_path(message),
+                    method: :delete,
+                    remote: true,
+                    class: 'btn btn-outline-danger',
+                    style: 'float: right'
+      br

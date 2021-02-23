@@ -1,0 +1,4 @@
+h1 Users
+- @users.each do |user|
+  = link_to "#{user.email}", user_path(user)
+  br

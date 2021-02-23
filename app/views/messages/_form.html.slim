@@ -1,0 +1,11 @@
+= form_with model: message do |form|
+  - if message.errors.any?
+    - message.errors.full_messages.each do |message|
+      = message
+      br
+  = form.label :body
+  br
+  = form.text_area :body, class: 'form-control'
+  br
+  = form.submit 'post message', class: 'btn btn-success'
+br

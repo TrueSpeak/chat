@@ -2,15 +2,33 @@
 <html>
   <head>
     <title>Chat</title>
+    <%= Gon::Base.render_data %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <% if signed_in? %>
+        <%= current_user.email %>
+        &nbsp
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-danger btn-sm' %>
+        <br>
+      <% else %>
+        <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-success btn-sm' %>
+        <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-warning btn-sm' %>
+      <% end %>
+      <br>
+      <%= link_to 'Main page', root_path %>
+      <%= link_to 'List of users', users_path if current_user&.role&.include?('admin') %>
+      <br>
+      <%= render 'shared/flash' %>
+      <br>
+      <%= yield %>
+    </div>
   </body>
 </html>
