@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BlackListedUser < ApplicationRecord
   belongs_to :black_list
 

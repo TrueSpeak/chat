@@ -1,16 +1,22 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
-  # before_action :authenticate_user!
+  rescue_from ActionPolicy::Unauthorized, with: :unauthorized_redirect
   before_action :gon_user
 
   protected
 
-  def authenticate?
+  def authenticate!
     return if signed_in?
 
-    redirect_to root_path, alert: 'Access denied. You need to authorize'
+    unauthorized_redirect
   end
 
   private
+
+  def unauthorized_redirect
+    redirect_to root_path, alert: 'Access denied. You need to authorize'
+  end
 
   def gon_user
     if signed_in?

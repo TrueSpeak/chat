@@ -1,49 +1,39 @@
-class UsersController < ApplicationController
-  before_action :authenticate?, only: [:destroy, :upgrade_role, :downgrade_role]
-  before_action :set_user, only: [:destroy, :show, :upgrade_role, :downgrade_role]
-  before_action :redirect_when_admin, only: [:destroy, :upgrade_role, :downgrade_role]
+# frozen_string_literal: true
 
-  def show
-  end
+class UsersController < ApplicationController
+  before_action :authenticate!, only: %i[destroy upgrade_role downgrade_role]
+  before_action :set_user, only: %i[destroy show upgrade_role downgrade_role]
+  before_action :redirect_when_admin, only: %i[destroy upgrade_role downgrade_role]
+
+  def show; end
 
   def destroy
-    if current_user.role.include?('admin')
-      @user.destroy
+    authorize! @user, to: :destroy?, with: UserPolicy
+    @user.destroy
 
-      flash[:alert] = 'User successfully deleted'
-      redirect_to users_path
-    end
+    redirect_to users_path
   end
 
   def index
-    if current_user&.role != 'admin'
-      flash[:alert] = 'Access denied. You need to authorize like admin'
-      redirect_to root_path
-    else
-      @users = User.all.where.not(role: 'admin')
-    end
+    authorize! @user, to: :index?, with: UserPolicy
+
+    @users = User.all.where.not(role: 'admin')
   end
 
   def upgrade_role
-    if current_user.role.include?('admin')
-      @user.update(role: 'moderator')
+    authorize! @user, to: :update?, with: UserPolicy
+    @user.update(role: 'moderator')
 
-      flash[:alert] = "#{@user.name} successfully upgraded to moderator"
-      redirect_to user_path(@user)
-    else
-      redirect_to root_path, alert: 'Access denied. You need to authorize'
-    end
+    flash[:alert] = "#{@user.name} successfully upgraded to moderator"
+    redirect_to user_path(@user)
   end
 
   def downgrade_role
-    if current_user.role.include?('admin')
-      @user.update(role: 'user')
+    authorize! @user, to: :update?, with: UserPolicy
+    @user.update(role: 'user')
 
-      flash[:alert] = "#{@user.name} successfully downgraded to default"
-      redirect_to user_path(@user)
-    else
-      redirect_to root_path, alert: 'Access denied. You need to authorize'
-    end
+    flash[:alert] = "#{@user.name} successfully downgraded to default"
+    redirect_to user_path(@user)
   end
 
   private
@@ -59,4 +49,3 @@ class UsersController < ApplicationController
     end
   end
 end
-

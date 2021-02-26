@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action_policy (0.5.5)
+      ruby-next-core (>= 0.11.0)
     actioncable (5.2.4.5)
       actionpack (= 5.2.4.5)
       nio4r (~> 2.0)
@@ -45,6 +47,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
+    ast (2.4.2)
     autoprefixer-rails (10.2.4.0)
       execjs
     bcrypt (3.1.16)
@@ -160,6 +163,9 @@ GEM
     nokogiri (1.11.1-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    parallel (1.20.1)
+    parser (3.0.0.0)
+      ast (~> 2.4.1)
     pg (1.2.3)
     pg (1.2.3-x64-mingw32)
     pg (1.2.3-x86-mingw32)
@@ -210,6 +216,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.19.0, < 2.0)
+    rainbow (3.0.0)
     rake (13.0.3)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
@@ -221,6 +228,7 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    rexml (3.2.4)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
     rspec-expectations (3.10.1)
@@ -238,6 +246,19 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.2)
+    rubocop (1.10.0)
+      parallel (~> 1.10)
+      parser (>= 3.0.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml
+      rubocop-ast (>= 1.2.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 3.0)
+    rubocop-ast (1.4.1)
+      parser (>= 2.7.1.5)
+    ruby-next-core (0.12.0)
+    ruby-progressbar (1.11.0)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
     sass (3.7.4)
@@ -306,6 +327,7 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    unicode-display_width (2.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (3.7.0)
@@ -333,6 +355,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  action_policy
   autoprefixer-rails
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.3.1)
@@ -358,6 +381,7 @@ DEPENDENCIES
   rails-js
   redis (~> 4.0)
   rspec-rails
+  rubocop (~> 1.10)
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateBlackListedUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :black_listed_users do |t|
