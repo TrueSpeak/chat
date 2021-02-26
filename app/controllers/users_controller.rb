@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate!, only: %i[destroy upgrade_role downgrade_role]
+  before_action :authenticate!, only: %i[show destroy index upgrade_role downgrade_role]
   before_action :set_user, only: %i[destroy show upgrade_role downgrade_role]
   before_action :redirect_when_admin, only: %i[destroy upgrade_role downgrade_role]
 
@@ -15,9 +15,9 @@ class UsersController < ApplicationController
   end
 
   def index
-    authorize! @user, to: :index?, with: UserPolicy
-
     @users = User.all.where.not(role: 'admin')
+
+    authorize! @users, to: :index?, with: UserPolicy
   end
 
   def upgrade_role

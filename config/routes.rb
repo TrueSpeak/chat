@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resources :messages
   resources :users do
     member do
-      post :downgrade_role
-      post :upgrade_role
+      patch :downgrade_role
+      patch :upgrade_role
     end
   end
 
