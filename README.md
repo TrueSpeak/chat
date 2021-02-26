@@ -1,4 +1,4 @@
-# Fin_tech application
+# websockets_chat application
 ### Environment server
 
 Ruby 2.6.6
