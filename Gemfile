@@ -38,6 +38,7 @@ gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'enumerize'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
@@ -51,7 +52,6 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
-  gem 'enumerize'
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.8'
   gem 'rspec-rails'
